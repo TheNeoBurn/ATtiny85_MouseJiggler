@@ -8,8 +8,8 @@ int XX = MOVEMENT_AREA_X / 2;
 int YY = MOVEMENT_AREA_Y / 20;
 // Static memory variables
 int d, x, y, xx, yy;
-int l = 0; // LED state
-int dl = 1; // LED state direction
+int l = 0; // Current LED state
+int dl = 1; // LED change direction
 bool enabled = false;
 bool down = false;
 
@@ -32,7 +32,7 @@ void loop() {
     down = false;
   }
   
-  d = 50;
+  d = 50; // default delay if disabled
   if (enabled) {
     // Get a random wait time between moves
     d = random(40, 60);
