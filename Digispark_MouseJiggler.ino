@@ -8,8 +8,8 @@ int XX = MOVEMENT_AREA_X / 2;
 int YY = MOVEMENT_AREA_Y / 20;
 // Static memory variables
 int d, x, y, xx, yy;
-int l = 0;
-int dl = 1;
+int l = 0; // LED state
+int dl = 1; // LED state direction
 bool enabled = false;
 bool down = false;
 
@@ -22,6 +22,7 @@ void setup() {
 }
 
 void loop() {
+  // Toggle the enabled flag and wait for key up before toggling again
   if (digitalRead(PB2) == LOW) {
     if (!down) {
       down = true;
@@ -49,11 +50,16 @@ void loop() {
   
     DigiMouse.move(x, y, 0);
   }
-  
+
+  // Using DigiMouse.delay() instead of delay() to handle USB
+  // interrupts in the meantime
   DigiMouse.delay(d);
 
+  // Update the status LED
+  // - Fading if not enabled
+  // - Blinking if enabled
   l += dl;
-  if (l > 50) {
+  if (l > 50) { 
     l = 50;
     dl = -1;
   } else if (l < 0) {
